@@ -1,42 +1,46 @@
 
-// Random number between 0 - 3 determines the computer's selection
-function getComputerChoice() {
- const rand = Math.floor(Math.random() * 3);
- let choice;
- return rand === 0 ? choice = 'rock' : rand === 1 ? choice = 'paper' : rand === 2 ? choice = 'scissors' : null
+const rock = document.querySelector('.rock');
+const paper = document.querySelector('.paper');
+const scissors = document.querySelector('.scissors');
+const results = document.querySelector('.results')
+const selections = document.querySelector('.selections')
+const playerScoreArea = document.querySelector('.playerScore')
+const computerScoreArea = document.querySelector('.computerScore')
+rock.addEventListener('click', (e) => playRound(getPlayerSelection(e.target.className), getComputerSelection()));
+paper.addEventListener('click', (e)=> playRound(getPlayerSelection(e.target.className), getComputerSelection()));
+scissors.addEventListener('click', (e)=> playRound(getPlayerSelection(e.target.className), getComputerSelection()));
+let playerScore = 0;
+let compScore = 0;
+function getPlayerSelection(selection) {
+playerSelect = selection;
+return playerSelect
 }
 
-// Get user input from a prompt
-function getPlayerChoice() {
-let playerChoice = prompt('Rock, Paper, or Scissors?').toLowerCase();
-return playerChoice;
+function getComputerSelection () {
+  const rand = Math.floor(Math.random() * 3);
+  let compSelects;
+
+  rand === 0 ? compSelects = 'rock' : rand === 1 ? compSelects = 'paper' : rand === 2 ? compSelects = 'scissors' : 'Computer is broken';
+  return compSelects;
 }
 
-// Plays one round of the game and determines the winner of the round
-function playRound () {
-let computerChoice = getComputerChoice();
-let playerChoice = getPlayerChoice();
+function playRound (playerSelection, compSelection) {
+determineWinner(playerSelection, compSelection)
+}
 
-if (playerChoice === 'rock' && computerChoice === 'paper' || playerChoice === 'scissors' && computerChoice === 'rock' || playerChoice === 'paper' && computerChoice === 'scissors' || playerChoice === '') {
-  return [1, computerChoice, playerChoice];
-} else if (playerChoice === computerChoice){
-  return [2, computerChoice, playerChoice];
+function determineWinner(playerSelection, compSelection) {
+if (playerSelection === compSelection) {
+  results.innerText =  `It's a tie!`
+  selections.innerText = `The computer chose, ${compSelection}! The player chose ${playerSelection}`
+} else if (compSelection === 'rock' && playerSelection === 'scissors' || compSelection === 'paper' && playerSelection === 'rock' || compSelection === 'scissors' && playerSelection === 'paper'){
+  results.innerText = `Computer wins!`
+  computerScoreArea.innerText = `Computer Score: ${compScore}`
+  compScore++;
+  selections.innerText = `The computer chose, ${compSelection}! The player chose ${playerSelection}`
 } else {
-  return [3, computerChoice, playerChoice];
+  results.innerText = `Player Wins!`
+  playerScore++;
+  playerScoreArea.innerText = `Player Score: ${playerScore} | `;
+  selections.innerText = `The computer chose, ${compSelection}! The player chose ${playerSelection}`
   }
 }
-// Plays 5 rounds of the game, keeps score, and announces the score as well as the selections.
-function playGame() { 
-let compWins = 0;
-let playerWins = 0;
-let tie = 0;
-
-for ( i = 0; i < 5; i++){ 
-  let results = playRound();
-  results[0] === 1 ? compWins++ : results[0] === 2 ? tie++ : results[0] === 3 ? playerWins++ : 'Error';
-  console.log(`Round ${i+1}: Computer: ${results[1]} Player: ${results[2]}`);
-}
-return `Computer Wins: ${compWins}, Player Wins: ${playerWins}, Ties: ${tie}`
-}
-
-console.log(playGame())
