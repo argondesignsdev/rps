@@ -36,11 +36,11 @@ if (playerSelection === compSelection) {
   results.innerText = `Computer wins!`
   computerScoreArea.innerText = `Computer Score: ${compScore}`
   compScore++;
-  selections.innerText = `The computer chose, ${compSelection}! The player chose ${playerSelection}`
+  selections.innerText = `The computer chose, ${compSelection}! The player chose ${playerSelection}!`
 } else {
   results.innerText = `Player Wins!`
   playerScore++;
   playerScoreArea.innerText = `Player Score: ${playerScore} | `;
-  selections.innerText = `The computer chose, ${compSelection}! The player chose ${playerSelection}`
+  selections.innerText = `The computer chose, ${compSelection}! The player chose ${playerSelection}!`
   }
 }
